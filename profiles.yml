@@ -1,0 +1,12 @@
+dbt_github:
+  target: dev
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      project: "padraic-slattery-sndbx-o"
+      dataset: "dagger_github"
+      keyfile: "./service_account.json"
+      timeout_seconds: 300
+      location: "EU"
+      priority: interactive

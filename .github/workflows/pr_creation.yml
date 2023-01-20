@@ -1,0 +1,27 @@
+name: Run Dagger on PR creation
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  dagger:
+    name: Run CICD
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+
+      - name: Install pip
+        run: python -m pip install --upgrade pip
+
+      - name: Install python dev dependencies
+        run: pip install -r requirements_dev.txt
+          
+      - name: Run Dagger
+        run: python ./dagger/pr_creation.yml
