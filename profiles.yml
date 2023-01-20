@@ -5,7 +5,7 @@ dbt_github:
       type: bigquery
       method: service-account
       project: "padraic-slattery-sndbx-o"
-      dataset: "{{ env_var('DBT_DATASET') }}"
+      dataset: "{{ env_var('DBT_DATASET', 'dagger_github') }}"
       keyfile: "./service_account.json"
       timeout_seconds: 300
       location: "EU"
