@@ -27,5 +27,5 @@ jobs:
         run: echo ${{ secrets.SERVICE_ACCOUNT_KEY_JSON_BASE64 }} | base64 --decode >> ./service_account.json
           
       - name: Run Dagger
-        run: python ./dagger/pr_creation.py
+        run: python ./dagger/pr_creation.py --pr-number ${{ github.event.number }} --run-number ${{ github.run_number }}
         

@@ -1,9 +1,18 @@
 import sys
 import anyio
 import dagger
+import argparse
+import os
 
 
-async def test():
+async def test(pr_number:int = None, run_number: int = None):
+    if pr_number is None or run_number is None:
+        dbt_dataset = os.getenv("DBT_DATASET")
+    else:
+        dbt_dataset = f"dagger_github_cicd_{pr_number}_{run_number}"
+
+    print(f"Using the {dbt_dataset} dataset.")
+
     versions = ["3.9", "3.10"]
 
     async with dagger.Connection(dagger.Config(log_output=sys.stderr)) as client:
@@ -39,4 +48,9 @@ async def test():
 
 
 if __name__ == "__main__":
-    anyio.run(test)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--pr-number') 
+    parser.add_argument('--run-number') 
+    args = parser.parse_args()
+
+    anyio.run(test, args.pr_number, args.run_number)
